@@ -1,47 +1,36 @@
 <script setup>
-import HelloWorld from './components/HelloWorld.vue'
-import TheWelcome from './components/TheWelcome.vue'
+import { ref } from 'vue'
+import MatchupTitle from './components/MatchupTitle.vue'
+import ScoreCard from './components/ScoreCard.vue'
+const team1 = ref({
+  name: 'Cavs',
+  score: '0'
+})
+const team2 = ref({
+  name: 'Raiders',
+  score: '0'
+})
+
+const add = (team) => {
+  team.score++
+}
+const subtract = (team) => {
+  if (team.score > 0) {
+    team.score--
+  }
+}
 </script>
 
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-    </div>
-  </header>
-
-  <main>
-    <TheWelcome />
-  </main>
+  <div>
+    <MatchupTitle :team1="team1" :team2="team2" />
+  </div>
+  <div>
+    <ScoreCard :score="team1.score" @add="add(team1)" @subtract="subtract(team1)" />
+  </div>
+  <div>
+    <ScoreCard :score="team2.score" @add="add(team2)" @subtract="subtract(team2)" />
+  </div>
 </template>
 
-<style scoped>
-header {
-  line-height: 1.5;
-}
-
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-}
-</style>
+<style scoped></style>
